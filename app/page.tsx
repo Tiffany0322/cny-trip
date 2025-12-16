@@ -1,65 +1,288 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { itinerary } from "@/lib/itinerary";
+import { WeatherPill } from "@/components/WeatherPill";
+import { pickItineraryDay } from "@/lib/day-selector";
+
+const quickNav = [
+  { label: "行程", href: "#section-itinerary", icon: "🗺️" },
+  { label: "住宿", href: "/lodging", icon: "🏨" },
+  { label: "行李", href: "/packing", icon: "🧳" },
+  { label: "票券", href: "/tickets", icon: "🎟️" },
+];
+
+const familyAnnouncements = [
+  {
+    dateLabel: "1/25",
+    message: "確認護照在身上並拍照存雲端。",
+  },
+  {
+    dateLabel: "1/28",
+    message: "統一去銀行換日幣，可代換請在家族群回覆。",
+  },
+];
+
+const transitShortcuts = [
+  {
+    label: "成田機場 → 飯店",
+    detail: "利木津巴士 4 號乘車口，提供 Google Maps 路線。",
+    icon: "🚌",
+    href: "https://www.google.com/maps/dir/?api=1&origin=Narita+International+Airport&destination=Tokyo+Bay+Oriental+Hotel",
+  },
+  {
+    label: "飯店 → 東京迪士尼",
+    detail: "官方接駁 / JR 新浦安線路，快速導航。",
+    icon: "🎢",
+    href: "https://www.google.com/maps/dir/?api=1&origin=Tokyo+Bay+Oriental+Hotel&destination=Tokyo+Disneyland",
+  },
+  {
+    label: "飯店 → 羽田機場",
+    detail: "回程利木津巴士集合點與終點站。",
+    icon: "🛫",
+    href: "https://www.google.com/maps/dir/?api=1&origin=Tokyo+Bay+Oriental+Hotel&destination=Haneda+Airport+Terminal+3",
+  },
+];
+
+export default function HomePage() {
+  const router = useRouter();
+  const { day: todayCard, index: todayIndex } = pickItineraryDay(itinerary);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
+  const [sharing, setSharing] = useState(false);
+
+  const daysUntilDeparture = useMemo(() => {
+    if (!itinerary.length) return null;
+    const firstDay = new Date(itinerary[0].id);
+    const now = new Date();
+    const diff = firstDay.getTime() - now.getTime();
+    if (diff <= 0) return 0;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  }, []);
+
+  async function logout() {
+    await fetch("/api/logout", { method: "POST" });
+    router.replace("/login");
+  }
+
+  async function handleShare() {
+    if (sharing) return;
+    setSharing(true);
+    setShareFeedback(null);
+
+    try {
+      const sharePayload = {
+        title: "CNY Tokyo Trip",
+        text: "family trip 行程表（2026/2/12 - 2/17）",
+        url: typeof window !== "undefined" ? window.location.href : "",
+      };
+
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(sharePayload);
+        setShareFeedback("已透過系統分享連結！");
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(sharePayload.url);
+        setShareFeedback("已複製網址到剪貼簿。");
+      } else {
+        setShareFeedback("請手動複製網址分享給家人。");
+      }
+    } catch (err) {
+      if ((err as DOMException).name !== "AbortError") {
+        setShareFeedback("分享未成功，可再試一次或手動分享。");
+      }
+    } finally {
+      setSharing(false);
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <main className="min-h-dvh bg-transparent">
+      <div className="mx-auto flex max-w-md flex-col gap-6 px-5 pb-36 pt-8">
+        <header className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
+              CNY Family Trip
+            </p>
+            <h1 className="text-2xl font-semibold text-gray-900">
+              東京 6 日行程
+            </h1>
+            <p className="text-sm text-gray-600">2026/2/12 - 2/17</p>
+          </div>
+
+          <button
+            onClick={logout}
+            className="rounded-2xl border border-pink-200 bg-white/80 px-4 py-2 text-sm font-medium text-pink-700 shadow-sm"
+          >
+            登出
+          </button>
+        </header>
+
+        <nav className="grid grid-cols-4 gap-2 rounded-3xl border border-white/60 bg-white/30 p-3 shadow-sm backdrop-blur">
+          {quickNav.map((item) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              key={item.label}
+              href={item.href}
+              className="flex flex-col items-center gap-1 rounded-2xl bg-white/70 px-2 py-3 text-xs font-semibold text-pink-700 shadow-sm transition hover:-translate-y-0.5"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <span className="text-lg">{item.icon}</span>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <section className="rounded-3xl bg-gradient-to-br from-[#FFDDEA] via-[#FFEFF5] to-[#FFF8FB] p-5 shadow-[0_25px_60px_rgba(255,143,196,0.2)]">
+          <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-pink-600">
+            <span className="text-lg">{todayCard.icon}</span>
+            今日提醒
+          </div>
+          <h2 className="mt-2 text-xl font-semibold text-gray-900">
+            {todayCard.title}
+          </h2>
+          <p className="text-sm text-gray-600">{todayCard.highlight}</p>
+          {daysUntilDeparture !== null ? (
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-pink-600">
+              {daysUntilDeparture === 0
+                ? "行程進行中！"
+                : `距離出發還有 ${daysUntilDeparture} 天`}
+            </p>
+          ) : null}
+          <WeatherPill
+            date={todayCard.id}
+            fallback={todayCard.weather}
+            className="mt-3"
+          />
+
+          <ul className="mt-4 space-y-2 text-sm text-gray-800">
+            {todayCard.blocks[0]?.entries.slice(0, 3).map((entry, index) => (
+              <li
+                key={`${entry.content}-${index}`}
+                className="flex items-center gap-3 rounded-2xl bg-white/80 px-3 py-2"
+              >
+                {entry.icon ? (
+                  <span className="text-xl">{entry.icon}</span>
+                ) : null}
+                <span className="text-xs font-semibold text-gray-500">
+                  {entry.time || "提醒"}
+                </span>
+                <span className="text-base">{entry.content}</span>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href={`/day/${todayCard.id}`}
+            className="mt-4 inline-flex items-center justify-center rounded-2xl bg-pink-500/90 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-pink-500"
+          >
+            查看 Day {todayIndex + 1} 詳細行程 →
+          </Link>
+
+          {familyAnnouncements.length ? (
+            <div className="mt-4 rounded-2xl border border-white/60 bg-white/60 p-3 text-sm text-gray-800">
+              <div className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
+                家族公告
+              </div>
+              <ul className="mt-2 space-y-1">
+                {familyAnnouncements.map((item) => (
+                  <li key={`${item.dateLabel}-${item.message}`}>
+                    <span className="text-xs font-semibold text-pink-600">
+                      {item.dateLabel}
+                    </span>{" "}
+                    {item.message}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </section>
+
+        <section className="rounded-3xl border border-pink-100 bg-white/90 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
+            行程分享 / 日曆
+          </div>
+          <p className="mt-2 text-sm text-gray-600">
+            一鍵分享網址給家人，或下載 .ics 匯入 Apple / Google 行事曆。
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+            <button
+              onClick={handleShare}
+              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-200 bg-white px-4 py-3 text-sm font-semibold text-pink-700 shadow-sm transition hover:-translate-y-0.5 disabled:opacity-40"
+              disabled={sharing}
+            >
+              {sharing ? "分享中…" : "分享給家人"}
+            </button>
+            <a
+              href="/cny-trip.ics"
+              download
+              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-400 bg-pink-500 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+            >
+              下載 .ics
+            </a>
+          </div>
+          {shareFeedback ? (
+            <p className="mt-2 text-xs text-pink-600">{shareFeedback}</p>
+          ) : null}
+        </section>
+
+        <section id="section-itinerary" className="space-y-3 scroll-mt-10">
+          <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+            快速入口
+          </div>
+          <div className="grid grid-cols-1 gap-3">
+            {itinerary.map((day, idx) => (
+              <Link
+                key={day.id}
+                href={`/day/${day.id}`}
+                className="rounded-3xl border border-pink-100 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span>
+                    {day.dateLabel}（{day.weekday}）
+                  </span>
+                  <span>Day {idx + 1}</span>
+                </div>
+                <div className="mt-2 flex items-center gap-2 text-base font-semibold text-gray-900">
+                  <span className="text-xl">{day.icon}</span>
+                  {day.title}
+                </div>
+                <p className="text-sm text-gray-600">{day.highlight}</p>
+                <WeatherPill
+                  date={day.id}
+                  fallback={day.weather}
+                  variant="compact"
+                  className="mt-2"
+                />
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+            交通捷徑
+          </div>
+          <div className="space-y-3">
+            {transitShortcuts.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-start gap-3 rounded-3xl border border-pink-100 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow"
+              >
+                <span className="text-2xl">{item.icon}</span>
+                <div>
+                  <div className="text-base font-semibold text-gray-900">
+                    {item.label}
+                  </div>
+                  <p className="text-sm text-gray-600">{item.detail}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+      </div>
+    </main>
   );
 }
