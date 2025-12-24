@@ -19,10 +19,6 @@ const familyAnnouncements = [
     dateLabel: "1/25",
     message: "確認護照在身上並拍照存雲端。",
   },
-  {
-    dateLabel: "1/28",
-    message: "統一去銀行換日幣，可代換請在家族群回覆。",
-  },
 ];
 
 const transitShortcuts = [
