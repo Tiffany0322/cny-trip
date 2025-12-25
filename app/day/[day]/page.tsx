@@ -86,7 +86,18 @@ export default async function DayPage({ params }: DayPageProps) {
                       {entry.time || "提醒"}
                     </span>
                     <span className="flex-1 text-base text-gray-900">
-                      {entry.content}
+                      {entry.href ? (
+                        <Link
+                          href={entry.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-pink-600 underline underline-offset-2"
+                        >
+                          {entry.content}
+                        </Link>
+                      ) : (
+                        entry.content
+                      )}
                     </span>
                   </li>
                 ))}
