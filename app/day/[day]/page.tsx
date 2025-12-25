@@ -155,9 +155,20 @@ export default async function DayPage({ params }: DayPageProps) {
             <div className="text-xs uppercase tracking-[0.3em] text-pink-600">
               住宿
             </div>
-            <p className="mt-2 text-lg font-semibold text-gray-900">
-              {plan.lodging}
-            </p>
+            <div className="mt-2 text-lg font-semibold text-gray-900">
+              {plan.lodgingHref ? (
+                <Link
+                  href={plan.lodgingHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-pink-600 underline underline-offset-2"
+                >
+                  {plan.lodging}
+                </Link>
+              ) : (
+                plan.lodging
+              )}
+            </div>
           </section>
         ) : null}
 
