@@ -38,6 +38,7 @@ export type DayPlan = {
   };
   blocks: ScheduleBlock[];
   lodging?: string;
+  lodgingAddress?: string;
   lodgingHref?: string;
   notes?: string[];
   noteLinks?: { label: string; href: string }[];
@@ -59,6 +60,7 @@ export const itinerary: DayPlan[] = [
       low: 4,
     },
     lodging: "東京灣東方飯店",
+    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
     lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
     blocks: [
       {
@@ -153,6 +155,7 @@ export const itinerary: DayPlan[] = [
       low: 3,
     },
     lodging: "東京灣東方飯店",
+    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
     lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
     blocks: [
       {
@@ -162,7 +165,6 @@ export const itinerary: DayPlan[] = [
             time: "早餐",
             content: "客美多咖啡 MONA 新浦安店",
             icon: "☕",
-            href: "https://maps.google.com/?q=%E3%82%B3%E3%83%A1%E3%83%80%E7%8F%88%E7%90%B2%E5%BA%97+MONA%E6%96%B0%E6%B5%A6%E5%AE%89%E5%BA%97",
           },
           {
             time: "地址",
@@ -175,7 +177,6 @@ export const itinerary: DayPlan[] = [
             time: "樂園",
             content: "東京迪士尼樂園 / 海洋整日行程",
             icon: "🏰",
-            href: "https://maps.google.com/?q=Tokyo+Disneyland",
           },
         ],
       },
@@ -216,6 +217,7 @@ export const itinerary: DayPlan[] = [
       low: 2,
     },
     lodging: "東京灣東方飯店",
+    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
     lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
     blocks: [
       {
@@ -232,7 +234,6 @@ export const itinerary: DayPlan[] = [
             time: "午餐",
             content: "叙叙苑 銀座店燒肉",
             icon: "🍖",
-            href: "https://maps.google.com/?q=%E5%8F%99%E5%8F%99%E8%8B%91+%E9%8A%80%E5%BA%A7",
           },
           {
             time: "地址",
@@ -254,7 +255,6 @@ export const itinerary: DayPlan[] = [
           {
             content: "澀谷 Sky 夜景（可視天氣決定）",
             icon: "🌃",
-            href: "https://maps.google.com/?q=Shibuya+Sky",
           },
         ],
       },
@@ -298,6 +298,7 @@ export const itinerary: DayPlan[] = [
       low: 1,
     },
     lodging: "東京灣東方飯店",
+    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
     lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
     blocks: [
       {
@@ -348,7 +349,6 @@ export const itinerary: DayPlan[] = [
             time: "下午",
             content: "餐後前往淺草、雷門散步拍照",
             icon: "⛩️",
-            href: "https://maps.google.com/?q=%E6%B7%BA%E8%8D%89+%E9%9B%B7%E9%96%80",
           },
         ],
       },
@@ -358,7 +358,6 @@ export const itinerary: DayPlan[] = [
           {
             content: "晚餐後可去晴空塔夜景或藥妝店補貨",
             icon: "🌃",
-            href: "https://maps.google.com/?q=Tokyo+Skytree",
           },
           { content: "逛藥妝、補充保養品與生活用品", icon: "💊" },
         ],
@@ -396,6 +395,7 @@ export const itinerary: DayPlan[] = [
       low: 2,
     },
     lodging: "東京灣東方飯店",
+    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
     lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
     blocks: [
       {
@@ -405,7 +405,6 @@ export const itinerary: DayPlan[] = [
           {
             content: "前往東京車站逛逛，挑選伴手禮",
             icon: "🎁",
-            href: "https://maps.google.com/?q=Tokyo+Station+Gransta",
           },
           {
             time: "地址",
@@ -426,7 +425,6 @@ export const itinerary: DayPlan[] = [
             time: "18:00",
             content: "かに道樂 銀座八丁目店（已預約）",
             icon: "🦀",
-            href: "https://maps.google.com/?q=%E3%81%8B%E3%81%AB%E9%81%93%E6%A5%BD+%E9%8A%80%E5%BA%A7%E5%85%AB%E4%B8%81%E7%9B%AE%E5%BA%97",
           },
           {
             time: "地址",
