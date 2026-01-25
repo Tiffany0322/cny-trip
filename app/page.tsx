@@ -11,7 +11,7 @@ import { pickItineraryDay } from "@/lib/day-selector";
 const quickNav = [
   { label: "行程", href: "#section-itinerary", icon: "🗺️" },
   { label: "住宿", href: "/lodging", icon: "🏨" },
-  { label: "行李", href: "/packing", icon: "🧳" },
+  { label: "預算", href: "/budget", icon: "💰" },
   { label: "票券", href: "/tickets", icon: "🎟️" },
 ];
 
