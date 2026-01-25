@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { lodgingInfo, transitResources } from "@/lib/itinerary";
+import { lodgingList } from "@/lib/lodging-data";
+import { transitResources } from "@/lib/itinerary";
+import { CopyableText } from "@/components/CopyableText";
 
 export default function LodgingPage() {
   return (
@@ -12,41 +14,54 @@ export default function LodgingPage() {
           ← 回行程總覽
         </Link>
 
-        <header className="rounded-3xl border border-pink-100 bg-[#FFF9FB] p-6 shadow-sm">
-          <p className="text-xs uppercase tracking-[0.3em] text-pink-600">
-            住宿
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-pink-600 mb-2">
+            住宿資訊
           </p>
-          <h1 className="mt-2 text-2xl font-semibold text-gray-900">
-            {lodgingInfo.name}
-          </h1>
-          <p className="text-sm text-gray-600">{lodgingInfo.nights}</p>
-          <p className="mt-2 text-sm text-gray-700">{lodgingInfo.address}</p>
-          <div className="mt-2 text-sm text-gray-700">
-            電話：
-            <a className="underline" href={`tel:${lodgingInfo.phone}`}>
-              {lodgingInfo.phone}
-            </a>
+          <div className="space-y-6">
+            {lodgingList.map((hotel, idx) => (
+              <header key={idx} className="rounded-3xl border border-pink-100 bg-[#FFF9FB] p-6 shadow-sm">
+                <h1 className="text-xl font-semibold text-gray-900">
+                  {hotel.name}
+                </h1>
+                <p className="mt-1 text-sm font-medium text-pink-600">{hotel.nights}</p>
+
+                <div className="mt-3">
+                  <CopyableText text={hotel.address} className="text-sm text-gray-700" label={hotel.address} />
+                </div>
+
+                <div className="mt-2 text-sm text-gray-700">
+                  電話：
+                  <a className="underline" href={`tel:${hotel.phone}`}>
+                    {hotel.phone}
+                  </a>
+                </div>
+                <p className="mt-3 text-sm text-gray-600 border-t border-pink-100 pt-3">{hotel.note}</p>
+
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href={hotel.mapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-200 bg-white px-4 py-3 text-sm font-semibold text-pink-700 shadow-sm transition hover:-translate-y-0.5"
+                  >
+                    開啟地圖
+                  </Link>
+                  {hotel.shuttleTimetableUrl && (
+                    <Link
+                      href={hotel.shuttleTimetableUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-400 bg-pink-500 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+                    >
+                      接駁車時刻表
+                    </Link>
+                  )}
+                </div>
+              </header>
+            ))}
           </div>
-          <p className="mt-3 text-sm text-gray-600">{lodgingInfo.note}</p>
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={lodgingInfo.mapUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-200 bg-white px-4 py-3 text-sm font-semibold text-pink-700 shadow-sm transition hover:-translate-y-0.5"
-            >
-              開啟地圖
-            </Link>
-            <Link
-              href={lodgingInfo.shuttleTimetableUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-400 bg-pink-500 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
-            >
-              迪士尼接駁車時刻表
-            </Link>
-          </div>
-        </header>
+        </div>
 
         <section className="rounded-3xl border border-pink-100 bg-white/90 p-5 shadow-sm">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
