@@ -4,6 +4,10 @@ import Link from "next/link";
 import { budgetItems } from "@/lib/budget";
 
 export default function BudgetPage() {
+    const totalPerPersonNT = budgetItems.reduce((acc, item) => {
+        return acc + (item.costPerPersonNT || 0);
+    }, 0);
+
     return (
         <main className="min-h-dvh bg-transparent">
             <div className="mx-auto flex max-w-2xl flex-col gap-6 px-5 pb-20 pt-8">
@@ -18,9 +22,17 @@ export default function BudgetPage() {
                     <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
                         TRIP BUDGET
                     </p>
-                    <h1 className="mt-1 text-2xl font-semibold text-gray-900">
-                        預算表
-                    </h1>
+                    <div className="mt-1 flex items-baseline justify-between gap-4">
+                        <h1 className="text-2xl font-semibold text-gray-900">
+                            預算表
+                        </h1>
+                        <div className="text-right">
+                            <span className="text-xs text-gray-500 mr-2">每人預估</span>
+                            <span className="text-2xl font-bold text-pink-600">
+                                ${totalPerPersonNT.toLocaleString()}
+                            </span>
+                        </div>
+                    </div>
                 </header>
 
                 {/* Mobile View: Cards */}
