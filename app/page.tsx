@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { itinerary } from "@/lib/itinerary";
 import { WeatherPill } from "@/components/WeatherPill";
+import { CopyableText } from "@/components/CopyableText";
 import { pickItineraryDay } from "@/lib/day-selector";
 
 const quickNav = [
@@ -153,15 +154,25 @@ export default function HomePage() {
             {todayCard.blocks[0]?.entries.slice(0, 3).map((entry, index) => (
               <li
                 key={`${entry.content}-${index}`}
-                className="flex items-center gap-3 rounded-2xl bg-white/80 px-3 py-2"
+                className="flex flex-col gap-1 rounded-2xl bg-white/80 px-3 py-2"
               >
-                {entry.icon ? (
-                  <span className="text-xl">{entry.icon}</span>
+                <div className="flex items-center gap-3">
+                  {entry.icon ? (
+                    <span className="text-xl">{entry.icon}</span>
+                  ) : null}
+                  <span className="text-xs font-semibold text-gray-500">
+                    {entry.time || "提醒"}
+                  </span>
+                  <span className="text-base">{entry.content}</span>
+                </div>
+                {entry.address ? (
+                  <div className="ml-[calc(1.25rem+0.75rem+2rem)]">
+                    <CopyableText
+                      text={entry.address}
+                      className="text-xs"
+                    />
+                  </div>
                 ) : null}
-                <span className="text-xs font-semibold text-gray-500">
-                  {entry.time || "提醒"}
-                </span>
-                <span className="text-base">{entry.content}</span>
               </li>
             ))}
           </ul>

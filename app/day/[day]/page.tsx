@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDayPlan, itinerary } from "@/lib/itinerary";
 import { WeatherPill } from "@/components/WeatherPill";
+import { CopyableText } from "@/components/CopyableText";
 
 type DayPageProps = {
   params: Promise<{ day: string }>;
@@ -76,29 +77,39 @@ export default async function DayPage({ params }: DayPageProps) {
               </div>
               <ul className="mt-3 space-y-2 text-sm text-gray-800">
                 {block.entries.map((entry, idx) => (
-                  <li key={`${entry.content}-${idx}`} className="flex items-center gap-3">
-                    {entry.icon ? (
-                      <span className="text-xl">{entry.icon}</span>
-                    ) : (
-                      <span className="text-xl text-gray-300">•</span>
-                    )}
-                    <span className="w-20 text-xs font-semibold text-gray-500">
-                      {entry.time || "提醒"}
-                    </span>
-                    <span className="flex-1 text-base text-gray-900">
-                      {entry.href ? (
-                        <Link
-                          href={entry.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-pink-600 underline underline-offset-2"
-                        >
-                          {entry.content}
-                        </Link>
+                  <li key={`${entry.content}-${idx}`} className="flex flex-col gap-1">
+                    <div className="flex items-center gap-3">
+                      {entry.icon ? (
+                        <span className="text-xl">{entry.icon}</span>
                       ) : (
-                        entry.content
+                        <span className="text-xl text-gray-300">•</span>
                       )}
-                    </span>
+                      <span className="w-20 text-xs font-semibold text-gray-500">
+                        {entry.time || "提醒"}
+                      </span>
+                      <span className="flex-1 text-base text-gray-900">
+                        {entry.href ? (
+                          <Link
+                            href={entry.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-pink-600 underline underline-offset-2"
+                          >
+                            {entry.content}
+                          </Link>
+                        ) : (
+                          entry.content
+                        )}
+                      </span>
+                    </div>
+                    {entry.address ? (
+                      <div className="ml-[calc(1.25rem+0.75rem+5rem)]">
+                        <CopyableText
+                          text={entry.address}
+                          className="text-xs"
+                        />
+                      </div>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -159,18 +170,23 @@ export default async function DayPage({ params }: DayPageProps) {
               {plan.lodging}
             </div>
             {plan.lodgingAddress ? (
-              plan.lodgingHref ? (
-                <Link
-                  href={plan.lodgingHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm text-pink-600 underline underline-offset-2"
-                >
-                  {plan.lodgingAddress}
-                </Link>
-              ) : (
-                <p className="text-sm text-gray-600">{plan.lodgingAddress}</p>
-              )
+              <div className="mt-1">
+                {plan.lodgingHref ? (
+                  <div className="flex flex-col gap-1">
+                    <Link
+                      href={plan.lodgingHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-pink-600 underline underline-offset-2"
+                    >
+                      {plan.lodgingAddress}
+                    </Link>
+                    <CopyableText text={plan.lodgingAddress} label="複製地址" className="text-xs" />
+                  </div>
+                ) : (
+                  <CopyableText text={plan.lodgingAddress} className="text-sm" />
+                )}
+              </div>
             ) : null}
           </section>
         ) : null}

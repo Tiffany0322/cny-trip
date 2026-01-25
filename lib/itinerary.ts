@@ -3,6 +3,7 @@ export type ScheduleEntry = {
   content: string;
   icon?: string;
   href?: string;
+  address?: string;
 };
 
 export type ScheduleBlock = {
@@ -171,6 +172,7 @@ export const itinerary: DayPlan[] = [
             content: "千葉縣浦安市入船 1-5-1 MONA 新浦安 1F",
             icon: "📍",
             href: "https://maps.google.com/?q=%E5%8D%83%E8%91%89%E7%9C%8C%E6%B5%A6%E5%AE%89%E5%B8%82%E5%85%A5%E8%88%B91-5-1",
+            address: "千葉縣浦安市入船 1-5-1 MONA 新浦安 1F",
           },
           { time: "交通", content: "飯店接駁車前往迪士尼", icon: "🚎" },
           {
@@ -208,7 +210,7 @@ export const itinerary: DayPlan[] = [
     dateLabel: "2026/2/14",
     weekday: "六",
     title: "Day 3・城市散步日",
-    highlight: "飯店移動日，午餐叙叙苑燒肉，下午銀座逛街",
+    highlight: "飯店移動日，午餐叙叙苑燒肉，銀座逛街，澀谷sky夜景",
     icon: "🌸",
     weather: {
       icon: "🌦️",
@@ -216,34 +218,35 @@ export const itinerary: DayPlan[] = [
       high: 9,
       low: 2,
     },
-    lodging: "東京灣東方飯店",
-    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
-    lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
+    lodging: "三井花園飯店銀座五丁目",
+    lodgingAddress: "東京都中央區銀座 5-13-15",
+    lodgingHref: "https://maps.google.com/?q=Mitsui+Garden+Hotel+Ginza+Gochome",
     blocks: [
       {
         label: "早",
         entries: [
-          { time: "早餐", content: "飯店早餐，整理行李準備進市區", icon: "🥐" },
-          { time: "移動", content: "前往銀座周邊，提早確認交通路線", icon: "🚆" },
+          { time: "早餐", content: "飯店早餐，整理行李準備移動", icon: "🥐" },
+          { time: "09:30", content: "包車前往銀座周邊", icon: "🚐" },
         ],
       },
       {
         label: "午",
         entries: [
           {
-            time: "午餐",
-            content: "叙叙苑 銀座店燒肉",
+            time: "12:00",
+            content: "叙叙苑 有乐町Mullion店（已預約）",
             icon: "🍖",
           },
           {
             time: "地址",
-            content: "東京都中央區銀座 5-4-6 Royal Crystal Ginza 9F",
+            content: "東京都千代田区有楽町2-5-1 有楽町マリオン 15F",
             icon: "📍",
-            href: "https://maps.google.com/?q=Royal+Crystal+Ginza",
+            href: "https://maps.google.com/?q=有楽町マリオン",
+            address: "東京都千代田区有楽町2-5-1 有楽町マリオン 15F",
           },
           {
             time: "逛街",
-            content: "銀座 3COINS、F1 店、UNIQLO、MUJI、水果大福",
+            content: "銀座 3COINS、F1 店、HARBS、UNIQLO、MUJI 水果大福",
             icon: "🛍️",
           },
         ],
@@ -251,35 +254,30 @@ export const itinerary: DayPlan[] = [
       {
         label: "晚",
         entries: [
-          { content: "尋找居酒屋或特色餐廳", icon: "🍶" },
           {
-            content: "澀谷 Sky 夜景（可視天氣決定）",
+            time: "晚餐",
+            content: "炊火焼き リリー 渋谷店",
+            icon: "🔥",
+            address: "東京都渋谷区渋谷 1-13-5 大協渋谷ビル 1F",
+            href: "https://maps.google.com/?q=炊火焼き+リリー+渋谷店",
+          },
+          {
+            content: "澀谷SHIBUYA SKY展望台 欣賞夜景",
             icon: "🌃",
+            address: "東京都渋谷区渋谷 2-24-12",
+            href: "https://maps.google.com/?q=SHIBUYA+SKY",
           },
         ],
       },
     ],
-    notes: ["若想預約 teamLab，可視人數提前安排。"],
     transit: {
       title: "進市區建議路線",
       segments: [
         {
-          line: "飯店接駁巴士",
+          line: "包車",
           from: "東京灣東方飯店",
-          to: "新浦安站",
-          note: "約 10 分鐘，班距 20 分",
-        },
-        {
-          line: "JR 京葉線 / 武藏野線",
-          from: "新浦安站",
-          to: "東京站 / 銀座 / 舞濱",
-          note: "往東京站約 17 分鐘",
-        },
-        {
-          line: "東京 Metro 銀座線或半藏門線",
-          from: "東京站 / 大手町",
-          to: "銀座 / 晴空塔 / 表參道",
-          note: "視目的地轉乘",
+          to: "銀座飯店周邊",
+          note: "09:30 出發",
         },
       ],
     },
@@ -297,9 +295,9 @@ export const itinerary: DayPlan[] = [
       high: 11,
       low: 1,
     },
-    lodging: "東京灣東方飯店",
-    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
-    lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
+    lodging: "三井花園飯店銀座五丁目",
+    lodgingAddress: "東京都中央區銀座 5-13-15",
+    lodgingHref: "https://maps.google.com/?q=Mitsui+Garden+Hotel+Ginza+Gochome",
     blocks: [
       {
         label: "早",
@@ -329,6 +327,7 @@ export const itinerary: DayPlan[] = [
             content: "東京都中央區銀座 6-8-7 交詢ビル 5F（Google Maps）",
             icon: "📍",
             href: "https://maps.google.com/?q=6-8-7+Ginza%2C+Chuo+City%2C+Tokyo+104-0061",
+            address: "東京都中央區銀座 6-8-7 交詢ビル 5F",
           },
           {
             time: "套餐",
@@ -394,9 +393,9 @@ export const itinerary: DayPlan[] = [
       high: 8,
       low: 2,
     },
-    lodging: "東京灣東方飯店",
-    lodgingAddress: "〒279-0013 千葉縣浦安市日之出 2-6-1",
-    lodgingHref: "https://maps.google.com/?q=Tokyo+Bay+Oriental+Hotel",
+    lodging: "三井花園飯店銀座五丁目",
+    lodgingAddress: "東京都中央區銀座 5-13-15",
+    lodgingHref: "https://maps.google.com/?q=Mitsui+Garden+Hotel+Ginza+Gochome",
     blocks: [
       {
         label: "早",
@@ -411,6 +410,7 @@ export const itinerary: DayPlan[] = [
             content: "東京都千代田區丸之內 1-9-1（東京車站）",
             icon: "📍",
             href: "https://maps.google.com/?q=1-9-1+Marunouchi+Chiyoda+City+Tokyo",
+            address: "東京都千代田區丸之內 1-9-1",
           },
         ],
       },
@@ -431,6 +431,7 @@ export const itinerary: DayPlan[] = [
             content: "東京都中央區銀座 8-10-8 銀座八丁目 10 番ビル",
             icon: "📍",
             href: "https://maps.google.com/?q=%E9%8A%80%E5%BA%A78-10-8",
+            address: "東京都中央區銀座 8-10-8 銀座八丁目 10 番ビル",
           },
           { content: "飯後散步或回飯店休息", icon: "🌙" },
         ],
@@ -463,7 +464,7 @@ export const itinerary: DayPlan[] = [
     dateLabel: "2026/2/17",
     weekday: "二",
     title: "Day 6・返回台灣",
-    highlight: "上午早餐後收拾行李，下午返台",
+    highlight: "8:00 包車前往羽田機場，下午返台",
     icon: "🧳",
     weather: {
       icon: "⛅",
@@ -474,7 +475,10 @@ export const itinerary: DayPlan[] = [
     blocks: [
       {
         label: "早",
-        entries: [{ content: "飯店早餐（行李打包、退房）", icon: "🥐" }],
+        entries: [
+          { time: "早餐", content: "飯店早餐", icon: "🥐" },
+          { time: "08:00", content: "包車前往羽田機場", icon: "🚐" },
+        ],
       },
       {
         label: "午",
@@ -496,10 +500,10 @@ export const itinerary: DayPlan[] = [
       title: "飯店 → 羽田機場 → 松山",
       segments: [
         {
-          line: "利木津巴士 (羽田方向)",
-          from: "東京灣東方飯店",
+          line: "包車",
+          from: "三井花園飯店銀座五丁目",
           to: "羽田機場第3航廈",
-          note: "建議 08:30 前搭乘，車程約 40 分鐘",
+          note: "08:00 出發",
         },
       ],
     },
