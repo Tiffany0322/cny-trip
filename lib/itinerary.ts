@@ -96,7 +96,16 @@ export const itinerary: DayPlan[] = [
       },
       {
         label: "晚",
-        entries: [{ content: "飯店附近商場逛街吃晚餐", icon: "🍜" }],
+        entries: [
+          {
+            time: "晚餐",
+            content: "牛舌焼き仙台 邊見 MONA新浦安店4F",
+            icon: "👅",
+            address: "千葉縣浦安市入船 1-5-1 MONA 新浦安 4F",
+            href: "https://maps.google.com/?q=%E7%89%9B%E8%88%8C%E7%84%BC%E3%81%8D%E4%BB%99%E5%8F%B0+%E9%82%8A%E8%A6%8B+MONA%E6%96%B0%E6%B5%A6%E5%AE%89%E5%BA%97",
+          },
+          { content: "逛 UNIQLO、MUJI、GU", icon: "🛍️" },
+        ],
       },
     ],
     notes: [
@@ -355,10 +364,16 @@ export const itinerary: DayPlan[] = [
         label: "晚",
         entries: [
           {
-            content: "晚餐後可去晴空塔夜景或藥妝店補貨",
+            time: "18:30",
+            content: "晚餐-鰻魚飯(浅草うな鐵 浅草駅前本店) 已預約",
+            icon: "🍱",
+            address: "東京都台東区花川戸 1-2-11",
+            href: "https://maps.google.com/?q=%E6%B5%85%E8%8D%89%E3%81%86%E3%81%AA%E9%90%B5+%E6%B5%85%E8%8D%89%E9%A7%85%E5%89%8D%E6%9C%AC%E5%BA%97",
+          },
+          {
+            content: "晴空塔夜景？逛藥妝",
             icon: "🌃",
           },
-          { content: "逛藥妝、補充保養品與生活用品", icon: "💊" },
         ],
       },
     ],
@@ -400,7 +415,7 @@ export const itinerary: DayPlan[] = [
       {
         label: "早",
         entries: [
-          { content: "自由活動，可安排咖啡廳 / 藥妝補貨", icon: "🧋" },
+          { content: "早午餐 - 築地市場", icon: "🍣" },
           {
             content: "前往東京車站逛逛，挑選伴手禮",
             icon: "🎁",
