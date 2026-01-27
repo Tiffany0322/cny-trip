@@ -300,7 +300,7 @@ export const itinerary: DayPlan[] = [
     dateLabel: "2026/2/15",
     weekday: "日",
     title: "Day 4・慢遊東京",
-    highlight: "中午銀座壽喜燒聚餐，下午自由散步或購物",
+    highlight: "中午銀座壽喜燒聚餐，下午淺草雷門散步",
     icon: "☁️",
     weather: {
       icon: "🌤️",
