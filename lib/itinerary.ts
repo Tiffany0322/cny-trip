@@ -4,6 +4,8 @@ export type ScheduleEntry = {
   icon?: string;
   href?: string;
   address?: string;
+  priceLink?: string;
+  priceLabel?: string;
 };
 
 export type ScheduleBlock = {
@@ -243,8 +245,10 @@ export const itinerary: DayPlan[] = [
         entries: [
           {
             time: "12:00",
-            content: "叙叙苑 有乐町Mullion店（已預約）",
+            content: "叙叙苑 有乐町Mullion店（已預約） - 商業午餐 ¥3,200 起",
             icon: "🍖",
+            priceLink: "/menu/jojoen",
+            priceLabel: "查看價錢",
           },
           {
             time: "地址",
