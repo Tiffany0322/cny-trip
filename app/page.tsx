@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { itinerary } from "@/lib/itinerary";
 import { WeatherPill } from "@/components/WeatherPill";
@@ -46,8 +46,6 @@ const transitShortcuts = [
 export default function HomePage() {
   const router = useRouter();
   const { day: todayCard, index: todayIndex } = pickItineraryDay(itinerary);
-  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
-  const [sharing, setSharing] = useState(false);
 
   const daysUntilDeparture = useMemo(() => {
     if (!itinerary.length) return null;
@@ -61,36 +59,6 @@ export default function HomePage() {
   async function logout() {
     await fetch("/api/logout", { method: "POST" });
     router.replace("/login");
-  }
-
-  async function handleShare() {
-    if (sharing) return;
-    setSharing(true);
-    setShareFeedback(null);
-
-    try {
-      const sharePayload = {
-        title: "CNY Tokyo Trip",
-        text: "family trip 行程表（2026/2/12 - 2/17）",
-        url: typeof window !== "undefined" ? window.location.href : "",
-      };
-
-      if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share(sharePayload);
-        setShareFeedback("已透過系統分享連結！");
-      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
-        await navigator.clipboard.writeText(sharePayload.url);
-        setShareFeedback("已複製網址到剪貼簿。");
-      } else {
-        setShareFeedback("請手動複製網址分享給家人。");
-      }
-    } catch (err) {
-      if ((err as DOMException).name !== "AbortError") {
-        setShareFeedback("分享未成功，可再試一次或手動分享。");
-      }
-    } finally {
-      setSharing(false);
-    }
   }
 
   return (
@@ -200,34 +168,6 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-          ) : null}
-        </section>
-
-        <section className="rounded-3xl border border-pink-100 bg-white/90 p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
-            行程分享 / 日曆
-          </div>
-          <p className="mt-2 text-sm text-gray-600">
-            一鍵分享網址給家人，或下載 .ics 匯入 Apple / Google 行事曆。
-          </p>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <button
-              onClick={handleShare}
-              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-200 bg-white px-4 py-3 text-sm font-semibold text-pink-700 shadow-sm transition hover:-translate-y-0.5 disabled:opacity-40"
-              disabled={sharing}
-            >
-              {sharing ? "分享中…" : "分享給家人"}
-            </button>
-            <a
-              href="/cny-trip.ics"
-              download
-              className="inline-flex flex-1 items-center justify-center rounded-2xl border border-pink-400 bg-pink-500 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
-            >
-              下載 .ics
-            </a>
-          </div>
-          {shareFeedback ? (
-            <p className="mt-2 text-xs text-pink-600">{shareFeedback}</p>
           ) : null}
         </section>
 
