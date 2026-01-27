@@ -334,6 +334,8 @@ export const itinerary: DayPlan[] = [
             time: "11:30",
             content: "人形町今半 銀座店壽喜燒（4 人）",
             icon: "🍲",
+            priceLink: "/menu/imahan",
+            priceLabel: "預算 ¥11,314/人",
           },
           {
             time: "地址",

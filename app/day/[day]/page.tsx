@@ -101,20 +101,15 @@ export default async function DayPage({ params }: DayPageProps) {
                           entry.content
                         )}
                       </span>
-
+                      {entry.priceLink ? (
+                        <Link
+                          href={entry.priceLink}
+                          className="shrink-0 rounded-lg border border-pink-200 bg-pink-50 px-2 py-1 text-xs font-semibold text-pink-600 transition hover:bg-pink-100"
+                        >
+                          {entry.priceLabel || "查看價錢"}
+                        </Link>
+                      ) : null}
                     </div>
-                    {
-                      entry.priceLink ? (
-                        <div className="ml-[calc(1.25rem+0.75rem+2rem)]">
-                          <Link
-                            href={entry.priceLink}
-                            className="inline-flex items-center rounded-lg border border-pink-200 bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600 transition hover:bg-pink-100"
-                          >
-                            {entry.priceLabel || "查看詳細價錢"} →
-                          </Link>
-                        </div>
-                      ) : null
-                    }
                     {
                       entry.address ? (
                         <div className="ml-[calc(1.25rem+0.75rem+5rem)]">
