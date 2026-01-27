@@ -7,19 +7,13 @@ import { itinerary } from "@/lib/itinerary";
 import { WeatherPill } from "@/components/WeatherPill";
 import { CopyableText } from "@/components/CopyableText";
 import { pickItineraryDay } from "@/lib/day-selector";
+import { Checklist } from "@/components/Checklist";
 
 const quickNav = [
   { label: "行程", href: "#section-itinerary", icon: "🗺️" },
   { label: "住宿", href: "/lodging", icon: "🏨" },
   { label: "預算", href: "/budget", icon: "💰" },
   { label: "票券", href: "/tickets", icon: "🎟️" },
-];
-
-const familyAnnouncements = [
-  {
-    dateLabel: "1/25",
-    message: "確認護照在身上並拍照存雲端。",
-  },
 ];
 
 const transitShortcuts = [
@@ -152,23 +146,7 @@ export default function HomePage() {
             查看 Day {todayIndex + 1} 詳細行程 →
           </Link>
 
-          {familyAnnouncements.length ? (
-            <div className="mt-4 rounded-2xl border border-white/60 bg-white/60 p-3 text-sm text-gray-800">
-              <div className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
-                家族公告
-              </div>
-              <ul className="mt-2 space-y-1">
-                {familyAnnouncements.map((item) => (
-                  <li key={`${item.dateLabel}-${item.message}`}>
-                    <span className="text-xs font-semibold text-pink-600">
-                      {item.dateLabel}
-                    </span>{" "}
-                    {item.message}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+          <Checklist />
         </section>
 
         <section id="section-itinerary" className="space-y-3 scroll-mt-10">
