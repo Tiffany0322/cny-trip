@@ -407,6 +407,7 @@ export const itinerary: DayPlan[] = [
             href: "https://maps.google.com/?q=%E6%B5%85%E8%8D%89%E3%81%86%E3%81%AA%E9%90%B5+%E6%B5%85%E8%8D%89%E9%A7%85%E5%89%8D%E6%9C%AC%E5%BA%97",
           },
           {
+            time: "考慮",
             content: "晴空塔夜景？逛藥妝",
             icon: "🌃",
           },
