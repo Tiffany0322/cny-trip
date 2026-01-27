@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const initialItems = [
-    "1/25 確認護照在身上並拍照存雲端。",
+    "確認護照在身上並拍照存雲端。",
     "換日幣",
     "旅平險",
     "登錄外交部出國",
@@ -54,8 +54,8 @@ export function Checklist() {
                         >
                             <div
                                 className={`flex-shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition ${isChecked
-                                        ? "bg-pink-500 border-pink-500 text-white"
-                                        : "bg-white border-pink-300"
+                                    ? "bg-pink-500 border-pink-500 text-white"
+                                    : "bg-white border-pink-300"
                                     }`}
                             >
                                 {isChecked && (
