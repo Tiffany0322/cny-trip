@@ -354,6 +354,11 @@ export const itinerary: DayPlan[] = [
             content: "用途填家族聚餐，座位指定 Mitsui Garden Ginza-Gochome",
             icon: "📝",
           },
+        ],
+      },
+      {
+        label: "下午",
+        entries: [
           {
             time: "下午",
             content: "餐後前往淺草、雷門散步拍照",
